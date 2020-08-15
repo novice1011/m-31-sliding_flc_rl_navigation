@@ -82,7 +82,7 @@ Tf = 10;
 %             'Bias',2/sqrt(criticLayerSizes(1))*(rand(criticLayerSizes(2),1)-0.5))
 
 %% CRITIC network
-criticLayerSizes = [200 200 200 200 100];
+criticLayerSizes = [100 100 100 100 50];
 statePath = [
     imageInputLayer([numObservations 1 1],'Normalization','none','Name','State')
     fullyConnectedLayer(criticLayerSizes(1),'Name','CriticStateFC1')
@@ -96,7 +96,8 @@ statePath = [
     fullyConnectedLayer(criticLayerSizes(5),'Name','CriticStateFC_final')];
 actionPath = [
     imageInputLayer([numActions 1 1],'Normalization','none','Name','Action')
-    fullyConnectedLayer(criticLayerSizes(5),'Name','CriticActionFC1')];
+    fullyConnectedLayer(criticLayerSizes(4),'Name','CriticActionFC1')
+    fullyConnectedLayer(criticLayerSizes(5),'Name','CriticActionFC_final')];
 commonPath = [
     additionLayer(2,'Name','add')
     reluLayer('Name','CriticCommonRelu')
@@ -107,7 +108,7 @@ criticNetwork = addLayers(criticNetwork,statePath);
 criticNetwork = addLayers(criticNetwork,actionPath);
 criticNetwork = addLayers(criticNetwork,commonPath);
 criticNetwork = connectLayers(criticNetwork,'CriticStateFC_final','add/in1');
-criticNetwork = connectLayers(criticNetwork,'CriticActionFC1','add/in2');
+criticNetwork = connectLayers(criticNetwork,'CriticActionFC_final','add/in2');
 
 %% View the critic network configuration.
 % figure
@@ -131,7 +132,7 @@ critic = rlRepresentation(criticNetwork,obsInfo,actInfo,'Observation',{'State'},
 % Construct the actor in a similar manner to the critic.
 % For more information, see "rlDeterministicActorRepresentation".
 
-actorLayerSizes = [200 200 200];
+actorLayerSizes = [100 100 100 100 50];
 actorNetwork = [
     imageInputLayer([numObservations 1 1],'Normalization','none','Name','State')
     fullyConnectedLayer(actorLayerSizes(1), 'Name','actorFC1')
@@ -140,6 +141,10 @@ actorNetwork = [
     reluLayer('Name','actorRelu2')
     fullyConnectedLayer(actorLayerSizes(3),'Name','actorFC3')
     reluLayer('Name','actorRelu3')
+    fullyConnectedLayer(actorLayerSizes(4),'Name','actorFC4')
+    reluLayer('Name','actorRelu4')
+    fullyConnectedLayer(actorLayerSizes(5),'Name','actorFC5')
+    reluLayer('Name','actorRelu5')
     fullyConnectedLayer(numActions,'Name','Action0')
     tanhLayer('Name','Action')
     ];
@@ -170,7 +175,7 @@ agent = rlDDPGAgent(actor,critic,agentOpts);
 % 3. Stop training when the agent receives an average cumulative reward greater than 800 over 20 consecutive episodes. At this point, the agent can control the level of water in the tank.
 % For more information, see rlTrainingOptions.
 
-maxepisodes = 1000;
+maxepisodes = 10000;
 maxsteps = ceil(Tf/Ts);
 trainOpts = rlTrainingOptions(...
     'MaxEpisodes',maxepisodes, ...

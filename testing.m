@@ -28,8 +28,8 @@ ksep_dot = 100;     %S dot scaler
 tau_b = 0; %disturbance amplitude
 f = 10;
 
-G_x = 10; %When not using path generator
-G_y = 0;  %When not using path generator
+G_x = 0; %When not using path generator
+G_y = 10;  %When not using path generator
 
 xa_init=0;
 ya_init=0;

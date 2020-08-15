@@ -71,23 +71,26 @@ $$
     b. Else $R_4=-\frac{1}{200}\frac{\Delta |e_h|}{\Delta t}$  
 
 ## Actor Network  
-![](https://i.imgur.com/bDsKSHJ.png =80x)
-![](https://i.imgur.com/8Mz826I.png =600x)   
+![](https://i.imgur.com/XsUQvLH.png =80x)
+![](https://i.imgur.com/kWrKAnz.png =600x)  
 
 ## Critic Network  
-![](https://i.imgur.com/hp3mCNq.png =150x)
-![](https://i.imgur.com/g7U17KB.png =500x)  
+![](https://i.imgur.com/JHwPkJu.png =150x)
+![](https://i.imgur.com/qfM6any.png =500x)  
+
 
 ---
 
 # Result  
 
 ## Training result    
-Since it is a deep neural network, the training takes longer, but moving average shows progress.  
-![](https://i.imgur.com/NF5hVOg.png)  
+The system does not want to learn.  
+![](https://i.imgur.com/Aj9Vyh2.png)  
 
 ## Target approaching with and without disturbance  
-NOT YET  
+The system failed to a approach point without disturbance.   
+![](https://i.imgur.com/sRh7PCk.png)  
+![](https://i.imgur.com/ttuSlGt.png)  
 
 
 ## Target approaching with and without disturbance  
